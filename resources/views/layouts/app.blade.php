@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="position-ref full-height">
@@ -34,6 +34,6 @@
     </div>
 </div>
 
-<script src="/js/app.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

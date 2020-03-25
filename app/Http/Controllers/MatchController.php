@@ -2,9 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Input;
+use App\Models\Match;
+use Symfony\Component\HttpFoundation\Request;
 
 class MatchController extends Controller {
+
+    /**
+     * Model Match
+     *
+     * @var object
+     */
+    private $match;
+
+    /**
+     * Constructor
+     *
+     * @param Match $match
+     */
+    public function __construct(Match $match) {
+        $this->match = $match;
+    }
 
     public function index() {
         return view('index');
@@ -13,34 +30,20 @@ class MatchController extends Controller {
     /**
      * Returns a list of matches
      *
-     * TODO it's mocked, make this work :)
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function matches() {
-        return response()->json($this->fakeMatches());
+        return response()->json($this->listMatches());
     }
 
     /**
      * Returns the state of a single match
      *
-     * TODO it's mocked, make this work :)
-     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function match($id) {
-        return response()->json([
-            'id' => $id,
-            'name' => 'Match'.$id,
-            'next' => 2,
-            'winner' => 0,
-            'board' => [
-                1, 0, 2,
-                0, 1, 2,
-                0, 0, 0,
-            ],
-        ]);
+        return response()->json($this->listMatches($id));
     }
 
     /**
@@ -96,6 +99,26 @@ class MatchController extends Controller {
     }
 
     /**
+     * Get the array of matches
+     */
+    private function listMatches($id = null) {
+        // Define collect response
+        $collect = [];
+
+        // Get Matches
+        $collect = $this->match->getMatches($id);
+        
+        // If Match ID not found
+        if($collect == 'not_found') {
+            // Throw new Exception
+            throw new \Exception('Match ID: ' . $id . ' not found');
+        }
+
+        // Return match data
+        return $collect;
+    }
+
+    /**
      * Creates a fake array of matches
      *
      * @return \Illuminate\Support\Collection
@@ -148,5 +171,4 @@ class MatchController extends Controller {
             ],
         ]);
     }
-
 }
