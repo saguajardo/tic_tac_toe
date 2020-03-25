@@ -32,6 +32,75 @@ class Match extends Model
 	}
 
 	/**
+	 * Create a new Match
+	 *
+	 * @return void
+	 */
+	public function createMatch() {
+		// Begin Transaction
+		DB::beginTransaction();
+
+		try {
+			// Create a new Board
+			$board = \App\Models\Board::create();
+
+			// Create a new Match
+			self::create([
+				'name'      => 'Match ' . $board->id,
+				'next'      => 1,
+				'winner'    => 0,
+				'board_id'  => $board->id,
+			]);
+		} catch(\Exception $e) {
+			// Rollback
+			DB::rollback();
+
+			// Return error message
+			return [
+				'error' => $e->getMessage()
+			];
+		}
+
+		// Commit
+		DB::commit();
+		return ['success'];
+	}
+
+	 /**
+	  * Delete Match
+	  *
+	  * @param int $id
+	  * @return void
+	  */
+	public function deleteMatch($id) {
+		// Begin Transaction
+		DB::beginTransaction();
+
+		try {
+			// Find match by ID
+			$match = self::findOrFail($id);
+
+			// Change active state
+			$match->active = false;
+
+			// Update field
+			$match->update();
+		} catch(\Exception $e) {
+			// Rollback
+			DB::rollback();
+
+			// Return error message
+			return [
+				'error' => $e->getMessage()
+			];
+		}
+        
+		// Commit
+		DB::commit();
+		return ['success'];
+	}
+
+	/**
 	 * Get Matches
 	 *
 	 * @param int $id
