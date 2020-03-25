@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const URL_MATCHES = '/api/match',
-    URL_MATCH = '/api/match/',
-    URL_MOVE = '/api/match/',
-    URL_CREATE = '/api/match',
-    URL_DELETE = '/api/match/';
+const URL_MATCHES = '{{ url("api/match") }}',
+    URL_MATCH = '{{ url("api/match") }}',
+    URL_MOVE = '{{ url("api/match") }}',
+    URL_CREATE = '{{ url("api/match") }}',
+    URL_DELETE = '{{ url("api/match") }}';
 
 export default {
     matches: () => {
