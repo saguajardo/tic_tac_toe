@@ -49,28 +49,28 @@ class MatchController extends Controller {
     /**
      * Makes a move in a match
      *
-     * TODO it's mocked, make this work :)
-     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function move($id) {
-        $board = [
-            1, 0, 2,
-            0, 1, 2,
-            0, 0, 0,
-        ];
+    public function move($id, Request $request) {
+        // Get position
+        $position = $request->input('position');
+        
+        // Find match by ID
+        $match = $this->match->move($id, $position);
 
-        $position = Input::get('position');
-        $board[$position] = 2;
-
-        return response()->json([
-            'id' => $id,
-            'name' => 'Match'.$id,
-            'next' => 1,
-            'winner' => 0,
-            'board' => $board,
-        ]);
+        if($match == 'not_available') {
+            throw new \Exception('Not available');
+        } else {
+            // Return match data
+            return response()->json([
+                'id'        => $match->id,
+                'name'      => $match->name,
+                'next'      => $match->next,
+                'winner'    => $match->winner,
+                'board'     => $match->board,
+            ]);
+        }
     }
 
     /**
