@@ -47808,11 +47808,11 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 
-var URL_MATCHES = '/api/match',
-    URL_MATCH = '/api/match/',
-    URL_MOVE = '/api/match/',
-    URL_CREATE = '/api/match',
-    URL_DELETE = '/api/match/';
+var URL_MATCHES = 'api/match',
+    URL_MATCH = 'api/match/',
+    URL_MOVE = 'api/match/',
+    URL_CREATE = 'api/match',
+    URL_DELETE = 'api/match/';
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     matches: function matches() {
